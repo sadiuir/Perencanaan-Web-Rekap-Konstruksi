@@ -1,0 +1,95 @@
+
+<div class="space-y-6">
+  <!-- Tabs -->
+  <div class="flex border-b border-gray-200">
+    <button (click)="setTab('users')" 
+            [class.border-primary]="activeTab() === 'users'" 
+            [class.text-primary]="activeTab() === 'users'" 
+            class="px-4 py-2 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-primary focus:outline-none">
+            User Management
+    </button>
+    <button (click)="setTab('master-data')" 
+            [class.border-primary]="activeTab() === 'master-data'" 
+            [class.text-primary]="activeTab() === 'master-data'" 
+            class="px-4 py-2 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-primary focus:outline-none">
+            Master Data (Work Items)
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="bg-white p-6 rounded-lg shadow">
+    @if (activeTab() === 'users') {
+      <div>
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Manage Users</h3>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Full Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Username</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
+                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @for(user of users(); track user.id) {
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.fullName }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.username }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.role }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                           [class.bg-green-100]="user.isActive" [class.text-green-800]="user.isActive"
+                           [class.bg-red-100]="!user.isActive" [class.text-red-800]="!user.isActive">
+                      {{ user.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                     <button (click)="toggleUserStatus(user)" 
+                        class="text-indigo-600 hover:text-indigo-900 mr-4">
+                        {{ user.isActive ? 'Deactivate' : 'Activate' }}
+                      </button>
+                    <button class="text-red-600 hover:text-red-900">Delete</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+    @if (activeTab() === 'master-data') {
+      <div>
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Manage Master Work Items</h3>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Code</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Division</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unit</th>
+                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @for(item of masterItems(); track item.id) {
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.code }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.division }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ item.name }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.unit }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
+                    <button class="text-red-600 hover:text-red-900">Delete</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+  </div>
+</div>

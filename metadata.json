@@ -1,0 +1,5 @@
+{
+  "name": "Copy of Construction Recap Management",
+  "description": "A web application to manage and recap construction project progress, designed with specific user roles and permissions. It digitizes daily reporting, progress tracking, and validation workflows.",
+  "requestFramePermissions": []
+}
